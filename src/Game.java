@@ -1,7 +1,9 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
 import java.awt.Image;
 
@@ -9,7 +11,7 @@ import java.awt.Image;
 public class Game extends JFrame {
 
     // Declarations
-    private JPanel dvdLogo;
+    private JPanel dvdPanel;
 
     // Constructor
     public Game() {
@@ -27,12 +29,17 @@ public class Game extends JFrame {
         setContentPane(contentPane);
 
         // DVD Logo
-        dvdLogo = new JPanel();
-        dvdLogo.setBackground(new Color(0, 0, 200));
-        dvdLogo.setBounds(0, 0, 100, 200);
-        dvdLogo.setLayout(null);
+        dvdPanel = new JPanel();
+        dvdPanel.setBackground(new Color(0, 0, 200, 0));
+        dvdPanel.setBounds(0, 0, 250, 100);
+        dvdPanel.setLayout(null);
+        contentPane.add(dvdPanel);
 
-        Image dvdLogoImg = loadImage();
+        JLabel dvdLabel = new JLabel("DvD Logo");
+        dvdLabel.setName("DvD Logo");
+        dvdLabel.setIcon(loadImage("assets/dvd_logo.png", 250, 100));
+        dvdLabel.setBounds(0, 0, 250, 100);
+        dvdPanel.add(dvdLabel);
 
 
 
