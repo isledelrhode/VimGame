@@ -11,12 +11,13 @@ public class DVDLogo extends JPanel {
     private final JLabel dvdLabel;
     private final Timer timer;
     private boolean hitCorner;
+    private JPanel parentPanel;
 
     private int[] speed;
 
-    public DVDLogo() {
+    public DVDLogo(JPanel parentPanel) {
         // Set the panel as a whole
-        setBackground(new Color(0, 0, 0, 0));
+        setBackground(new Color(0, 0, 255, 0));
         setBounds(0, 0, 250, 100);
         setLayout(null);
 
@@ -28,11 +29,12 @@ public class DVDLogo extends JPanel {
         add(dvdLabel);
 
         // Timer
-        timer = new Timer(17, this::actionPerformed);
+        timer = new Timer(1, this::actionPerformed);
         timer.setCoalesce(false);
         timer.start();
 
         // Other fields
+        this.parentPanel = parentPanel;
         speed = new int[] {1, 1};
         hitCorner = false;
     }
@@ -41,7 +43,10 @@ public class DVDLogo extends JPanel {
     public void actionPerformed(ActionEvent e) {
         movePanel();
 
-        hitCorner = false;
+        if (hitCorner) {
+            System.out.println("Hit Corner!\n");
+            hitCorner = false;
+        }
     }
 
     // Minor functions
@@ -49,13 +54,13 @@ public class DVDLogo extends JPanel {
         boolean hitX = false;
         boolean hitY = false;
 
-        setBounds(getX() + speed[0], getY() + speed[1], 350, 350);
+        setBounds(getX() + speed[0], getY() + speed[1], getWidth(), getHeight());
 
-        if (getX() + getWidth() >= 900 || getX() <= 0) {
+        if (getX() + getWidth() >= parentPanel.getWidth() || getX() <= 0) {
             speed[0] *= -1;
             hitX = true;
         }
-        if (getY() + getHeight() >= 700 || getY() <= 0) {
+        if (getY() + getHeight() >= parentPanel.getHeight() || getY() <= 0) {
             speed[1] *= -1;
             hitY = true;
         }

@@ -1,7 +1,5 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
@@ -13,7 +11,7 @@ public class Game extends JFrame {
         setTitle("Vim Nav Trainer");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 900, 700);
+        setBounds(0, 0, 900, 700);
 
         // Main Content Pane
         JPanel contentPane = new JPanel();
@@ -23,7 +21,7 @@ public class Game extends JFrame {
 
         setContentPane(contentPane);
 
-        DVDLogo dvdPanel = new DVDLogo();
+        DVDLogo dvdPanel = new DVDLogo(contentPane);
         contentPane.add(dvdPanel);
     }
 
