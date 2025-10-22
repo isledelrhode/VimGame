@@ -5,14 +5,9 @@ import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
-import java.awt.Image;
 
 
 public class Game extends JFrame {
-
-    // Declarations
-    private JPanel dvdPanel;
-
     // Constructor
     public Game() {
         setTitle("Vim Nav Trainer");
@@ -28,21 +23,8 @@ public class Game extends JFrame {
 
         setContentPane(contentPane);
 
-        // DVD Logo
-        dvdPanel = new JPanel();
-        dvdPanel.setBackground(new Color(0, 0, 200, 0));
-        dvdPanel.setBounds(0, 0, 250, 100);
-        dvdPanel.setLayout(null);
+        DVDLogo dvdPanel = new DVDLogo();
         contentPane.add(dvdPanel);
-
-        JLabel dvdLabel = new JLabel("DvD Logo");
-        dvdLabel.setName("DvD Logo");
-        dvdLabel.setIcon(loadImage("assets/dvd_logo.png", 250, 100));
-        dvdLabel.setBounds(0, 0, 250, 100);
-        dvdPanel.add(dvdLabel);
-
-
-
     }
 
     // Main function
@@ -52,19 +34,7 @@ public class Game extends JFrame {
     }
 
     // Helper functions
-    private ImageIcon loadImage(String path, int width, int height) {
-        // Attempts to get image at file path and scale it. Returns proper ImageIcon if successful
-        try {
-            Image image = new ImageIcon(this.getClass().getResource(path)).getImage();
-            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        } catch (NullPointerException e) {
-            System.out.println("Can't retrieve file at file path because path is null.");
-        }
 
-        // Returns a blank ImageIcon if error is thrown
-        return new ImageIcon();
-    }
 
 
 }
