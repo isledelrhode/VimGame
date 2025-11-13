@@ -56,12 +56,18 @@ public class DVDLogo extends JPanel {
         boolean hitX = false;
         boolean hitY = false;
 
-        setBounds(getX() + speed[0], getY() + speed[1], getWidth(), getHeight());
-
-        if (getX() + getWidth() >= parentPanel.getWidth() || getX() <= 0) {
+        setLocation(getX() + speed[0], getY());
+        if (getX() + getWidth() >= parentPanel.getWidth()) {
+            setLocation(getX() - (parentPanel.getWidth() - getX() + getWidth()), getY());
+            speed[0] *= -1;
+            hitX = true;
+        } else if (getX() <= 0) {
+            setLocation(-getX(), getY());
             speed[0] *= -1;
             hitX = true;
         }
+
+        setLocation(getX(), getY() + speed[1]);
         if (getY() + getHeight() >= parentPanel.getHeight() || getY() <= 0) {
             speed[1] *= -1;
             hitY = true;
