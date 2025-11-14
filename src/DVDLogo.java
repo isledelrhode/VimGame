@@ -1,6 +1,5 @@
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.Timer;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionEvent;
@@ -9,10 +8,10 @@ import java.awt.Image;
 
 public class DVDLogo extends JPanel {
     private final JLabel dvdLabel;
-    private final Timer timer;
-    private boolean hitCorner;
-    private JPanel parentPanel;
+    private final JPanel parentPanel;
 
+    private boolean hitCorner;
+    private int freezeFrameIndex = -1;
     private int[] speed;
 
     public DVDLogo(JPanel parentPanel) {
@@ -28,11 +27,6 @@ public class DVDLogo extends JPanel {
         dvdLabel.setBounds(0, 0, 250, 100);
         add(dvdLabel);
 
-        // Timer
-        timer = new Timer(1, this::actionPerformed);
-        timer.setCoalesce(false);
-        timer.start();
-
         // Other fields
         this.parentPanel = parentPanel;
         speed = new int[] {1, 1};
@@ -41,10 +35,18 @@ public class DVDLogo extends JPanel {
 
     // Handle actions
     public void actionPerformed(ActionEvent e) {
-        movePanel();
-
+        if (freezeFrameIndex > 0) {
+            freezeFrameIndex--;
+        } else if (freezeFrameIndex == 0) {
+            freezeFrameIndex--;
+            parentPanel.setBackground(new Color(50, 50, 52));
+        } else {
+            movePanel();
+        }
         if (hitCorner) {
             System.out.println("Hit Corner!\n");
+            freezeFrameIndex = 3;
+            parentPanel.setBackground(new Color(255, 255, 255));
             hitCorner = false;
         }
     }
@@ -54,12 +56,18 @@ public class DVDLogo extends JPanel {
         boolean hitX = false;
         boolean hitY = false;
 
-        setBounds(getX() + speed[0], getY() + speed[1], getWidth(), getHeight());
-
-        if (getX() + getWidth() >= parentPanel.getWidth() || getX() <= 0) {
+        setLocation(getX() + speed[0], getY());
+        if (getX() + getWidth() >= parentPanel.getWidth()) {
+            setLocation(getX() - (parentPanel.getWidth() - getX() + getWidth()), getY());
+            speed[0] *= -1;
+            hitX = true;
+        } else if (getX() <= 0) {
+            setLocation(-getX(), getY());
             speed[0] *= -1;
             hitX = true;
         }
+
+        setLocation(getX(), getY() + speed[1]);
         if (getY() + getHeight() >= parentPanel.getHeight() || getY() <= 0) {
             speed[1] *= -1;
             hitY = true;
